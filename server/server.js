@@ -1,20 +1,22 @@
 const express = require('express')
 const accepts = require('accepts')
-const useragent = require('express-useragent');
+const useragent = require('express-useragent')
 const cookieParser = require('cookie-parser')
+const requestIp = require('request-ip')
 const app = express()
+const geoip = require('geoip-lite');
 const port = 3000
 
 app.use(cookieParser())
 app.use(express.json())
+app.use(requestIp.mw())
+app.use(useragent.express());
 
 setDefaultCookies = (res) => {
     res.cookie('source', 'website');
     res.cookie('campaign', 'test');
     res.cookie('voucher', null);
 }
-
-app.use(useragent.express());
 
 getBrowserVersionAndName = (req) => {
     const ua = req.useragent
@@ -62,8 +64,30 @@ app.get('/getBrowserPlatform', function (req, res) {
     }
 })
 
+getLocation = (ip) => {
+    // TODO: replace the ip variable on the line below with public ip value
+    const geo = geoip.lookup(ip);
+    const location = {
+        country: geo.country,
+        city: geo.city,
+        latitude: geo.ll[0],
+        longitude: geo.ll[1]
+    }
+
+    return location
+}
+
+
+app.get('/getClientLocation', function (req, res) {
+    const ip = req.clientIp.split(":").pop()
+    const location= getLocation(ip)
+    
+    res.send(`The client ip and location are ip: ${ip}, country: ${location.country}, city: ${location.city}`)
+})
+
 app.get('/', function (req, res) {
-    res.send('cookies created successfully')
+
+    res.send('app listens on port 3000')
 })
 
 app.post('/updateVoucherCookie', (req, res) => {
