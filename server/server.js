@@ -7,7 +7,7 @@ const geoip = require('geoip-lite');
 const requestIp = require('request-ip')
 
 const app = express()
-const port = 3000
+const port = 3001
 
 // local json files
 const prices = require('./config_files/prices.json')
