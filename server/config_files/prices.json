@@ -1,0 +1,14 @@
+{
+    "month": {
+        "monthly": 11.59,
+        "yearly" : 139.08
+    },
+    "year":{
+        "monthly": 5.29,
+        "yearly" : 63.48
+    },
+    "threeYears":{
+        "monthly": 2.45,
+        "yearly" : 29.4
+    }
+}
