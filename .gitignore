@@ -102,3 +102,28 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+# React Ignores
+
+# dependencies
+kape_frontend/node_modules
+kape_frontend/.pnp
+kape_frontend/.pnp.js
+
+# testing
+kape_frontend/coverage
+
+# production
+kape_frontend/build
+
+# misc
+kape_frontend/.DS_Store
+kape_frontend/.env.local
+kape_frontend/.env.development.local
+kape_frontend/.env.test.local
+kape_frontend/.env.production.local
+
+kape_frontend/npm-debug.log*
+kape_frontend/yarn-debug.log*
+kape_frontend/yarn-error.log*
