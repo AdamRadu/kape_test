@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: "15px",
         fontWeight: "bold",
         width: "100%",
-        paddingBottom: "15px"
     },
     price: {
         color: "#323232",

@@ -16,7 +16,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
+        flex: 1,
     },
     infoBar: {
         backgroundColor: "#E7E7E7",

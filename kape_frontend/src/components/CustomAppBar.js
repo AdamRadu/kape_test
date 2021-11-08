@@ -9,6 +9,9 @@ import TextButton from './customComponents/CustomTextButton'
 import Button from './customComponents/CustomButton'
 
 const useStyles = makeStyles((theme) => ({
+    root:{
+        flex: "1",
+    },
     bar: {
         backgroundColor: "#1D1E2F",
         height: "72px"
