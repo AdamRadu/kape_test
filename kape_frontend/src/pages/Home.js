@@ -1,10 +1,11 @@
 import CustomAppBar from "../components/CustomAppBar"
 import CustomInfoBar from "../components/CustomInfoBar"
-import FlagPaper from "../components/FlagPaper"
-import ProtectDataPaper from "../components/ProtectDataPaper"
-import DataPaper from "../components/DataPaper"
-import RestrictionsPaper from "../components/RestrictionsPaper"
-import SafetyPaper from "../components/SafetyPaper"
+import FlagPaper from "../components/papers/FlagPaper"
+import ProtectDataPaper from "../components/papers/ProtectDataPaper"
+import DataPaper from "../components/papers/DataPaper"
+import RestrictionsPaper from "../components/papers/RestrictionsPaper"
+import SafetyPaper from "../components/papers/SafetyPaper"
+import PricesPaper from "../components/papers/PricesPaper"
 
 export default function Home() {
   return <div>
@@ -15,5 +16,6 @@ export default function Home() {
     <DataPaper/>
     <SafetyPaper/>
     <RestrictionsPaper/>
+    <PricesPaper/>
   </div>;
 }

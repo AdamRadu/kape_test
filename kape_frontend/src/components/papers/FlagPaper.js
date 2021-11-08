@@ -1,10 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
-import flag from '../assets/Flag.png'
+import flag from '../../assets/Flag.png'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from './customComponents/CustomButton'
+import Button from '../customComponents/CustomButton'
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from "react-router-dom";
 
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: "15px",
         fontSize: "13px"
     },
-    container: {
+    grid: {
         height: "100%"
     },
     text: {
@@ -69,7 +69,7 @@ export default function FlagPaper() {
                     alignItems="center"
                     justifyContent="center"
                     style={{ width: "100%", height: "100%" }}>
-                    <Grid className={classes.container} container
+                    <Grid className={classes.grid} container
                         alignItems="center"
                         justifyContent="center" >
                         <Grid container style={{ width: "60%", height:"40%"}}

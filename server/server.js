@@ -76,6 +76,7 @@ prettyPrintPrices = () => {
 /* Helper function that takes as parameter a voucher and prints in the command line the list of prices from prices.json 
    and additionally inserts the prices after the discount was applied to them file in a tbale like format*/
 prettyPrintVoucherPrices = (voucher) => {
+    let discountedPrices = []
     console.log("-------------------------------------------------------------------------------------")
     console.log("|  Title   |    Price M   | Discounted M |   Price Y   | Discounted Y |   Voucher   |")
     console.log("-------------------------------------------------------------------------------------")
@@ -83,6 +84,7 @@ prettyPrintVoucherPrices = (voucher) => {
         let string = `|   ${key}   |`
         for (attr in prices[key]) {
             let constdiscPrice = prices[key][attr] - prices[key][attr] * vouchers[voucher]
+            discountedPrices.push(constdiscPrice)
             string += `    ${prices[key][attr]}   |   ${constdiscPrice}   |`
         }
 
@@ -91,6 +93,7 @@ prettyPrintVoucherPrices = (voucher) => {
         console.log(string)
         console.log("-------------------------------------------------------------------------------------")
     }
+    return discountedPrices
 }
 
 // Helper function that takes as an attribute a given ip address and returns the geolocation of that ip address
@@ -156,7 +159,7 @@ app.post('/getClientLocation', function (req, res) {
 // A request that reads the prices.json file and displays its contents in the command line
 app.get('/prices', function (req, res) {
     prettyPrintPrices()
-    res.send(`Succsesfully read local prices, please check command line`)
+    res.send(prices)
 })
 
 // Home
@@ -166,7 +169,7 @@ app.get('/', function (req, res) {
 
 // A request that updates the voucher cookie only if the voucher is valid, the discount code is one of the discount codes from vouchers.json file 
 app.get('/updateVoucherCookie', (req, res) => {
-    const voucher = req.query.voucher
+    const voucher = req.query.voucher ? req.query.voucher : req.cookies.voucher
     if (vouchers[voucher]) {
         res.cookie('voucher', voucher, { overwrite: true });
         res.send(`Voucher cookie was updated successfully with the value: ${voucher}`);
@@ -177,10 +180,9 @@ app.get('/updateVoucherCookie', (req, res) => {
 
 // A request that applies the discount value to all the prices from prices.json and prints them in the command line 
 app.get('/applyVoucherCookie', (req, res) => {
-    const voucher = req.query.voucher
-    if (vouchers[voucher]) {
-        prettyPrintVoucherPrices(voucher)
-        res.send(`Succsesfully updated prices post discount, please check command line`);
+    const voucher = req.query.voucher ? req.query.voucher : req.cookies.voucher
+    if (vouchers[voucher]) {  
+        res.send(`${prettyPrintVoucherPrices(voucher)}`);
     } else {
         res.send(`Your voucher is not valid!`);
     }

@@ -1,13 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
-import World from '../assets/World.png'
+import Safety from '../../assets/Safety.png'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        backgroundColor: "#F8F9FA",
+        backgroundColor: "#FFFFFF",
         paddingBottom: "30px"
     },
     subtitle: {
@@ -27,11 +27,6 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         fontSize: "16px",
         paddingBottom: "15px"
-    },
-    largeGrid: {
-        width: "100%",
-        paddingTop: "30px",
-        paddingBottom: "30px"
     },
     underline: {
         color: "#2876A7",
@@ -68,11 +63,14 @@ export default function DataPapaer() {
                         direction="row"
                         justifyContent="center"
                         alignItems="center">
+                        <Grid item xs={4} className={classes.grid}>
+                            <img src={Safety} alt="" />
+                        </Grid>
                         <Grid container xs={8} direction="column" className={classes.grid}>
                             <Grid container justifyContent='flex-start' >
                                 <Typography
                                     className={classes.subtitle}>
-                                    {'Smash all geo-restrictions'}
+                                    {'Stay safe on public Wi-Fis networks'}
                                 </Typography>
                                 <Grid item>
                                     <hr className={classes.line}/>
@@ -81,69 +79,34 @@ export default function DataPapaer() {
                             <Grid item >
                                 <Typography
                                     className={classes.body}>
-                                    {'By now, we’re mostly familiar with geo-restrictions and how frustrating they can be. Due to licensing issues many foreign TV shows and movies are restricted in Austria.'}
+                                    {'Wireless connections are so common nowadays that we don’t even stop to think the dangers they might pose. '}
+                                    {'Here’s the catch. The networks you use in cafés, airports, or hotels usually lack a secure setup or even a password.'}
                                 </Typography>
                             </Grid>
                             <Grid item >
                                 <Typography
                                     className={classes.body}>
-                                    {'Most streaming services detect your location based on your IP address. Then they decide what content is available for you to watch.'}
-
-                                </Typography>
-                            </Grid>
-                            <Grid item >
-                                <Typography
-                                    className={classes.body}>
-                                    {'One popular example of this is '}
+                                    {'This means that every time you go online using an unsecured Wi-Fi network,'}
                                     <span
                                         className={classes.underline}>
-                                        {'Netflix'}
+                                        {'you risk exposing your data.'}
                                     </span>
-                                    {'. Even if you have a subscription, you still can’t get the entire library of content in Austria.'}
                                 </Typography>
                             </Grid>
                             <Grid item >
                                 <Typography
                                     className={classes.body}>
-                                    {'The same holds true for '}
-                                    <span
-                                    className={classes.underline}>
-                                    {'Amazon Prime'}
-                                </span>
-                                    {' or '}
-                                <span
-                                    className={classes.underline}>
-                                    {'YouTube Premium'}
-                                </span>
-                                {'. Other services, '}
-                                <span
-                                    className={classes.underline}>
-                                    {'Hulu'}
-                                </span>
-                                    {' or '}
-                                <span
-                                    className={classes.underline}>
-                                    {'BBC'}
-                                </span>
-                                {' aren’t available to view within Austrian borders at all.'}
+                                    {'You should know that cybercrime has become a very lucrative business, so hackers have every reason to keep perfecting their methods. '}
+                                    {'This is worrying when you consider that there is already a multitude of malicious associations and attacks that target open Wi-Fi networks.'}
                                 </Typography>
                             </Grid>
                             <Grid item >
                                 <Typography
                                     className={classes.body}>
-                                    {'However, with our VPN service by your side, that’s no longer the case. CyberGhost VPN allows you to hide your IP address and replace it with another one from our network. This way, their localization software will no longer be able to detect your real location.'}
+                                    {'Therefore it’s important to secure your online presence no matter where you are. '}
+                                    {'Our military-grade encryption offers the best protection available and even today’s supercomputers can’t get past it.'}
                                 </Typography>
                             </Grid>
-                            <Grid item >
-                                <Typography
-                                    className={classes.body}>
-                                    {'And if you’re travelling abroad and feel homesick, CyberGhost VPN makes it easy to catch up with all from favorite shows on ORF.'}
-                                </Typography>
-                            </Grid>
-                            
-                        </Grid>
-                        <Grid item xs={4} className={classes.grid}>
-                            <img src={World} alt="" />
                         </Grid>
                     </Grid>
                 </Grid>

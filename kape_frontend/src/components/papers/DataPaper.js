@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper'
-import Freedom from '../assets/Freedom.png'
+import Freedom from '../../assets/Freedom.png'
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 

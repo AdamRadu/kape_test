@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import InfoIcon from '@mui/icons-material/Info';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import ReactFlagsSelect from 'react-flags-select';
 import LocaleCode from 'locale-code'
 import {
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     countriesSelect: {
         marginTop:"2px"
     },
-    container: {
+    grid: {
         width: "50%"
     }
 }));
@@ -97,7 +97,7 @@ export default function CustomInfoBar() {
 
             <AppBar position="static" className={classes.infoBar}>
                 <Toolbar className={classes.toolbar}>
-                    <Grid container className={classes.container}>
+                    <Grid container className={classes.grid}>
                         <Grid item className={classes.item} >
                             <Typography className={classes.text}
                                 variant="caption">
@@ -127,10 +127,10 @@ export default function CustomInfoBar() {
                                 variant="caption">
                                 {"EXPOSED"}
                             </Typography>
-                            <InfoIcon className={classes.info} />
+                            <InfoOutlinedIcon className={classes.info} />
                         </Grid>
                     </Grid>
-                    <Grid container className={classes.container}
+                    <Grid container className={classes.grid}
                         justifyContent="flex-end">
                         <ReactFlagsSelect className={classes.countriesSelect}
                             onSelect={code => setSelectedCountry(code)}

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     toolbar: {
         height: "100%"
     },
-    container: {
+    grid: {
         width: "50%"
     }
 }));
@@ -30,7 +30,7 @@ export default function CustomAppBar() {
 
             <AppBar position="static" className={classes.bar}>
                 <Toolbar className={classes.toolbar}>
-                    <Grid container className={classes.container}
+                    <Grid container className={classes.grid}
                     justifyContent= "space-between">
                         <Grid item>
                             <img src={logo} alt="" />
@@ -67,7 +67,7 @@ export default function CustomAppBar() {
                             text = {"Help"}/>
                         </Grid>
                     </Grid>
-                    <Grid container className={classes.container}
+                    <Grid container className={classes.grid}
                         justifyContent="flex-end">
                        <Grid item>
                             <Button
