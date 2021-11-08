@@ -1,19 +1,22 @@
 // external libraries
 const accepts = require('accepts')
 const cookieParser = require('cookie-parser')
+const cors = require("cors")
 const express = require('express')
 const useragent = require('express-useragent')
 const geoip = require('geoip-lite');
 const requestIp = require('request-ip')
+const countries = require("i18n-iso-countries");
 
 const app = express()
-const port = 3000
+const port = 3001
 
 // local json files
 const prices = require('./config_files/prices.json')
 const vouchers = require('./config_files/vouchers.json')
 
 app.use(cookieParser())
+app.use(cors())
 app.use(express.json())
 app.use(requestIp.mw())
 app.use(useragent.express());
@@ -73,6 +76,7 @@ prettyPrintPrices = () => {
 /* Helper function that takes as parameter a voucher and prints in the command line the list of prices from prices.json 
    and additionally inserts the prices after the discount was applied to them file in a tbale like format*/
 prettyPrintVoucherPrices = (voucher) => {
+    let discountedPrices = []
     console.log("-------------------------------------------------------------------------------------")
     console.log("|  Title   |    Price M   | Discounted M |   Price Y   | Discounted Y |   Voucher   |")
     console.log("-------------------------------------------------------------------------------------")
@@ -80,6 +84,7 @@ prettyPrintVoucherPrices = (voucher) => {
         let string = `|   ${key}   |`
         for (attr in prices[key]) {
             let constdiscPrice = prices[key][attr] - prices[key][attr] * vouchers[voucher]
+            discountedPrices.push(constdiscPrice)
             string += `    ${prices[key][attr]}   |   ${constdiscPrice}   |`
         }
 
@@ -88,13 +93,14 @@ prettyPrintVoucherPrices = (voucher) => {
         console.log(string)
         console.log("-------------------------------------------------------------------------------------")
     }
+    return discountedPrices
 }
 
 // Helper function that takes as an attribute a given ip address and returns the geolocation of that ip address
 getLocation = (ip) => {
     const geo = geoip.lookup(ip);
     const location = {
-        country: geo.country,
+        country: countries.getName(geo.country, "en", {select: "official"}),
         city: geo.city,
         latitude: geo.ll[0],
         longitude: geo.ll[1]
@@ -112,9 +118,10 @@ app.get('/setDefaultCoockies', function (req, res) {
 })
 
 // Arequest that retrieves the browser locale 
-app.get('/getBrowserLanguages', function (req, res) {
+app.post('/getClientLocale', function (req, res) {
     const lang = getAllBrowserLanguages(req)
-    res.send(`Browser accepted languages are: ${lang} `)
+    console.log(`Browser accepted languages are: ${lang} `)
+    res.send(lang)
 })
 
 // A request that retrieves the browser name and version
@@ -133,19 +140,26 @@ app.get('/getBrowserPlatform', function (req, res) {
     }
 })
 
-// A request that uses the client ip to determine the location of the client
-app.get('/getClientLocation', function (req, res) {
+// A request that returns the clients ip to the client
+app.post('/getClientIP', function (req, res) {
     const ip = req.clientIp.split(":").pop()
-    // TODO: replace the ip variable on the line below with the public ip value as a string 
-    const location = getLocation(ip)
+    console.log(`The client ip is: ${ip}`)
+    res.send(ip)
+})
 
-    res.send(`The client ip and location are ip: ${ip}, country: ${location.country}, city: ${location.city}`)
+// A request that uses the client ip to determine the location of the client
+app.post('/getClientLocation', function (req, res) {
+    const ip = req.clientIp.split(":").pop()
+    // TODO: replace the req.body.ip variable on the line below with the public ip value as a string 
+    const location = getLocation(req.body.ip)
+    console.log(`The client ip and location are ip: ${ip}, country: ${location.country}, city: ${location.city}`)
+    res.send(location)
 })
 
 // A request that reads the prices.json file and displays its contents in the command line
 app.get('/prices', function (req, res) {
     prettyPrintPrices()
-    res.send(`Succsesfully read local prices, please check command line`)
+    res.send(prices)
 })
 
 // Home
@@ -155,7 +169,7 @@ app.get('/', function (req, res) {
 
 // A request that updates the voucher cookie only if the voucher is valid, the discount code is one of the discount codes from vouchers.json file 
 app.get('/updateVoucherCookie', (req, res) => {
-    const voucher = req.query.voucher
+    const voucher = req.query.voucher ? req.query.voucher : req.cookies.voucher
     if (vouchers[voucher]) {
         res.cookie('voucher', voucher, { overwrite: true });
         res.send(`Voucher cookie was updated successfully with the value: ${voucher}`);
@@ -166,10 +180,9 @@ app.get('/updateVoucherCookie', (req, res) => {
 
 // A request that applies the discount value to all the prices from prices.json and prints them in the command line 
 app.get('/applyVoucherCookie', (req, res) => {
-    const voucher = req.query.voucher
-    if (vouchers[voucher]) {
-        prettyPrintVoucherPrices(voucher)
-        res.send(`Succsesfully updated prices post discount, please check command line`);
+    const voucher = req.query.voucher ? req.query.voucher : req.cookies.voucher
+    if (vouchers[voucher]) {  
+        res.send(`${prettyPrintVoucherPrices(voucher)}`);
     } else {
         res.send(`Your voucher is not valid!`);
     }
